@@ -1,0 +1,32 @@
+{
+  "Servers": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        6.21152,
+        49.62658
+      ]
+    },
+    "properties": {
+      "title": "Luxembourg, Luxembourg",
+      "hostname": "lux-c01.ipvanish.com",
+      "ip": "94.242.205.146",
+      "capacity": 7,
+      "online": true,
+      "visible": true,
+      "city": "Luxembourg",
+      "countryCode": "LU",
+      "country": "Luxembourg",
+      "regionCode": "03",
+      "latitude": "49.6265800",
+      "longitude": "6.2115200",
+      "region": "",
+      "regionAbbr": "",
+      "continent": "Europe",
+      "continentCode": "EU",
+      "marker-color": "#6EBC44",
+      "marker-cluster-small": "#6EBC44"
+    }
+  }
+}
