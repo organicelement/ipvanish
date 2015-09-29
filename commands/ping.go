@@ -93,8 +93,11 @@ var pingCmd = &cobra.Command{
 				break loop
 			}
 		}
+		log.Infof("Stop 1")
 		timeout.Stop()
+		log.Infof("Stop 2")
 		signal.Stop(c)
+		log.Infof("Stop 3")
 		p.Stop()
 		log.Info("End")
 	},

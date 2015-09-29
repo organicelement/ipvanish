@@ -1,6 +1,9 @@
 {
 	"ImportPath": "github.com/organicelement/ipvanish",
 	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/BurntSushi/toml",
@@ -13,6 +16,33 @@
 			"Rev": "52919f182f9c314f8a38c5afe96506f73d02b4b2"
 		},
 		{
+			"ImportPath": "github.com/agtorre/gocolorize",
+			"Comment": "v1.0.0",
+			"Rev": "f42b554bf7f006936130c9bb4f971afd2d87f671"
+		},
+		{
+			"ImportPath": "github.com/armon/consul-api",
+			"Rev": "dcfedd50ed5334f96adee43fc88518a4f095e15c"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/bugsnag-go",
+			"Comment": "v1.0.5",
+			"Rev": "9ee24c1db7e2c5b87e7228acb3e587a35124a041"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/osext",
+			"Rev": "0dd3f918b21bec95ace9dc86c7e70266cfc5c702"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/panicwrap",
+			"Rev": "e5f9854865b9778a45169fc249e99e338d4d6f27"
+		},
+		{
+			"ImportPath": "github.com/coreos/go-etcd/etcd",
+			"Comment": "v2.0.0-18-gc904d70",
+			"Rev": "c904d7032a70da6551c43929f199244f6a45f4c1"
+		},
+		{
 			"ImportPath": "github.com/cpuguy83/go-md2man/md2man",
 			"Comment": "v1.0.4",
 			"Rev": "71acacd42f85e5e82f70a55327789582a5200a90"
@@ -20,6 +50,10 @@
 		{
 			"ImportPath": "github.com/erikstmartin/go-testdb",
 			"Rev": "e91c57bcc918671f042bb1722841946bd376dcde"
+		},
+		{
+			"ImportPath": "github.com/getsentry/raven-go",
+			"Rev": "f48d5f2f57f3db8b95cdfc60a52dfeb357c6733f"
 		},
 		{
 			"ImportPath": "github.com/inconshreveable/mousetrap",
@@ -34,6 +68,11 @@
 			"ImportPath": "github.com/kr/pretty",
 			"Comment": "go.weekly.2011-12-22-27-ge6ac2fc",
 			"Rev": "e6ac2fc51e89a3249e82157fa0bb7a18ef9dd5bb"
+		},
+		{
+			"ImportPath": "github.com/kr/pty",
+			"Comment": "release.r56-28-g5cf931e",
+			"Rev": "5cf931ef8f76dccd0910001d74a58a7fca84a83d"
 		},
 		{
 			"ImportPath": "github.com/kr/text",
@@ -57,6 +96,19 @@
 		{
 			"ImportPath": "github.com/mitchellh/mapstructure",
 			"Rev": "281073eb9eb092240d33ef253c404f1cca550309"
+		},
+		{
+			"ImportPath": "github.com/revel/revel",
+			"Comment": "v0.12.0-3-ga9a2ff4",
+			"Rev": "a9a2ff45fae4330ef4116b257bcf9c82e53350c2"
+		},
+		{
+			"ImportPath": "github.com/robfig/config",
+			"Rev": "0f78529c8c7e3e9a25f15876532ecbc07c7d99e6"
+		},
+		{
+			"ImportPath": "github.com/robfig/pathtree",
+			"Rev": "41257a1839e945fce74afd070e02bab2ea2c776a"
 		},
 		{
 			"ImportPath": "github.com/russross/blackfriday",
@@ -97,6 +149,29 @@
 			"Rev": "06cac0fecdc29196187908b74939a2926c28a6d9"
 		},
 		{
+			"ImportPath": "github.com/tobi/airbrake-go",
+			"Rev": "5b5e269e1bc398d43f67e43dafff3414a59cd5a2"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "821cda7e48749cacf7cad2c6ed01e96457ca7e9d"
+		},
+		{
+			"ImportPath": "github.com/xordataexchange/crypt/backend",
+			"Comment": "v0.0.2-17-g749e360",
+			"Rev": "749e360c8f236773f28fc6d3ddfce4a470795227"
+		},
+		{
+			"ImportPath": "github.com/xordataexchange/crypt/config",
+			"Comment": "v0.0.2-17-g749e360",
+			"Rev": "749e360c8f236773f28fc6d3ddfce4a470795227"
+		},
+		{
+			"ImportPath": "github.com/xordataexchange/crypt/encoding/secconf",
+			"Comment": "v0.0.2-17-g749e360",
+			"Rev": "749e360c8f236773f28fc6d3ddfce4a470795227"
+		},
+		{
 			"ImportPath": "github.com/ziutek/mymysql/godrv",
 			"Comment": "v1.5.4",
 			"Rev": "e08c2f35356576b3c3690c252fe5dca728ae9292"
@@ -110,6 +185,14 @@
 			"ImportPath": "github.com/ziutek/mymysql/native",
 			"Comment": "v1.5.4",
 			"Rev": "e08c2f35356576b3c3690c252fe5dca728ae9292"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/cast5",
+			"Rev": "cc04154d65fb9296747569b107cfd05380b1ea3e"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/openpgp",
+			"Rev": "cc04154d65fb9296747569b107cfd05380b1ea3e"
 		},
 		{
 			"ImportPath": "golang.org/x/net/icmp",
@@ -126,6 +209,15 @@
 		{
 			"ImportPath": "golang.org/x/net/ipv6",
 			"Rev": "7654728e381988afd88e58cabfd6363a5ea91810"
+		},
+		{
+			"ImportPath": "golang.org/x/net/websocket",
+			"Rev": "7654728e381988afd88e58cabfd6363a5ea91810"
+		},
+		{
+			"ImportPath": "gopkg.in/fsnotify.v1",
+			"Comment": "v1.2.0",
+			"Rev": "96c060f6a6b7e0d6f75fddd10efeaca3e5d1bcb0"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
