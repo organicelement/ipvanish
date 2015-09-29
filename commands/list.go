@@ -63,8 +63,8 @@ var listCmd = &cobra.Command{
 			}
 			p2 := geo.NewPoint(lat, long)
 			dist := p.GreatCircleDistance(p2)
+			// Convert km to miles
 			servers[i].Distance = dist * 0.621371
-//			log.Infof("Server %s is %f miles from your location", server.Properties.Hostname, dist * 0.621371)
 		}
 
 		sort.Sort(ipv.DistanceSorter(servers))
@@ -72,23 +72,5 @@ var listCmd = &cobra.Command{
 		for _, server := range servers {
 			log.Infof("Server %v is %v miles from your location with %v%% utilization", server.Properties.Hostname, server.Distance, server.Properties.Capacity)
 		}
-
-
-
-		/*
-				site := &hugolib.Site{}
-
-				if err := site.Process(); err != nil {
-					fmt.Println("Error Processing Source Content", err)
-				}
-
-				for _, p := range site.Pages {
-					if p.IsDraft() {
-						fmt.Println(filepath.Join(p.File.Dir(), p.File.LogicalName()))
-					}
-
-				}
-		*/
-
 	},
 }

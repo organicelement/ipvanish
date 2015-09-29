@@ -38,6 +38,7 @@ func Execute() {
 //AddCommands adds child commands to the root command HugoCmd.
 func AddCommands() {
 	IpvanishCmd.AddCommand(listCmd)
+	IpvanishCmd.AddCommand(pingCmd)
 }
 
 //Initializes flags
