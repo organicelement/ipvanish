@@ -21,13 +21,22 @@ Complete documentation is available at http://ipvanish.com/.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		InitializeConfig()
 	},
+	PersistentPreRun: begin,
+	PersistentPostRun: finish,
+//	PreRun: func(cmd *cobra.Command, args []string) {
+//		fmt.Printf("Inside rootCmd PreRun with args: %v\n", args)
+//	},
+//	PostRun: func(cmd *cobra.Command, args []string) {
+//		fmt.Printf("Inside rootCmd PostRun with args: %v\n", args)
+//	},
 }
 
 var ipvanishCmdV *cobra.Command
 
 //Flags that are to be added to commands.
 var BuildWatch, IgnoreCache, Draft, Future, UglyURLs, Verbose, Logging, VerboseLog, DisableRSS, DisableSitemap, PluralizeListTitles, PreserveTaxonomyNames, NoTimes bool
-var Source, CacheDir, Destination, Theme, BaseURL, CfgFile, LogFile, Editor string
+var Source, CacheDir, Destination, Theme, Sort string
+var Results uint
 
 //Execute adds all child commands to the root command HugoCmd and sets flags appropriately.
 func Execute() {
@@ -44,22 +53,19 @@ func AddCommands() {
 //Initializes flags
 func init() {
 	// Persistent == available to sub commands
-	IpvanishCmd.PersistentFlags().BoolVarP(&Draft, "buildDrafts", "D", false, "include content marked as draft")
-	IpvanishCmd.PersistentFlags().BoolVar(&DisableRSS, "disableRSS", false, "Do not build RSS files")
-	IpvanishCmd.PersistentFlags().StringVarP(&Source, "source", "s", "", "filesystem path to read files relative from")
-	IpvanishCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is path/config.yaml|json|toml)")
+	IpvanishCmd.PersistentFlags().StringVarP(&Sort, "sort", "s", "capacity", "sort order for hosts (default is distance")
+	IpvanishCmd.PersistentFlags().UintVarP(&Results, "results", "n", 20, "Total number of results to display and filter")
 
 	ipvanishCmdV = IpvanishCmd
 
 	// for Bash autocomplete
-	validConfigFilenames := []string{"json", "js", "yaml", "yml", "toml", "tml"}
-	IpvanishCmd.PersistentFlags().SetAnnotation("config", cobra.BashCompFilenameExt, validConfigFilenames)
-	IpvanishCmd.PersistentFlags().SetAnnotation("theme", cobra.BashCompSubdirsInDir, []string{"themes"})
+	validSortFlags := []string{"distance", "capacity", "latency"}
+	IpvanishCmd.PersistentFlags().SetAnnotation("sort", cobra.BashCompOneRequiredFlag, validSortFlags)
 
-	// This message will be shown to Windows users if Hugo is opened from explorer.exe
+	// This message will be shown to Windows users if the command is opened from explorer.exe
 	cobra.MousetrapHelpText = `
 
-  Hugo is a command line tool
+  IPVanish is a command line tool
 
   You need to open cmd.exe and run it from there.`
 }
@@ -70,7 +76,7 @@ func LoadDefaultSettings() {
 
 // InitializeConfig initializes a config file with sensible default configuration flags.
 func InitializeConfig() {
-	viper.SetConfigFile(CfgFile)
+//	viper.SetConfigFile(CfgFile)
 	// See https://github.com/spf13/viper/issues/73#issuecomment-126970794
 	if Source == "" {
 		viper.AddConfigPath(".")
@@ -88,8 +94,8 @@ func InitializeConfig() {
 
 	LoadDefaultSettings()
 
-	if ipvanishCmdV.PersistentFlags().Lookup("buildDrafts").Changed {
-		viper.Set("BuildDrafts", Draft)
+	if ipvanishCmdV.PersistentFlags().Lookup("sort").Changed {
+		viper.Set("sort", Sort)
 	}
 
 /*
@@ -124,4 +130,10 @@ func InitializeConfig() {
 
 	jww.INFO.Println("Using config file:", viper.ConfigFileUsed())
 
+}
+
+func begin(cmd *cobra.Command, args []string) {
+}
+
+func finish(cmd *cobra.Command, args []string) {
 }
