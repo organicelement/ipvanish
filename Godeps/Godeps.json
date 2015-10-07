@@ -13,6 +13,10 @@
 			"Rev": "52919f182f9c314f8a38c5afe96506f73d02b4b2"
 		},
 		{
+			"ImportPath": "github.com/buger/goterm",
+			"Rev": "db9aaed44abbb1be9061aa43612ede2e864c5973"
+		},
+		{
 			"ImportPath": "github.com/cpuguy83/go-md2man/md2man",
 			"Comment": "v1.0.4",
 			"Rev": "71acacd42f85e5e82f70a55327789582a5200a90"
@@ -74,11 +78,6 @@
 		{
 			"ImportPath": "github.com/spf13/cobra",
 			"Rev": "4b76e97cd632fcfeb2709662344ca1b34da468a3"
-		},
-		{
-			"ImportPath": "github.com/spf13/hugo/utils",
-			"Comment": "v0.14-141-g4a2eda4",
-			"Rev": "4a2eda49cdd3180ab884a696ac987d7d6bb375db"
 		},
 		{
 			"ImportPath": "github.com/spf13/jwalterweatherman",

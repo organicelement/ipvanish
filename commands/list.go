@@ -24,13 +24,8 @@ import (
 	tm "github.com/buger/goterm"
 	"github.com/kellydunn/golang-geo"
 	"strconv"
-	"sort"
 	"fmt"
 )
-
-//func init() {
-//	listCmd.AddCommand(listSortCmd)
-//}
 
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -62,7 +57,15 @@ var listCmd = &cobra.Command{
 			servers[i].Distance = dist * 0.621371
 		}
 
-		sort.Sort(ipv.DistanceSorter(servers))
+		switch (viper.GetString(SORTFLAG)) {
+		case DISTANCE:
+			ipv.OrderedBy(ipv.Distance).Sort(servers)
+		case LATENCY:
+			ipv.OrderedBy(ipv.Distance, ipv.Latency).Sort(servers)
+		case CAPACITY:
+			ipv.OrderedBy(ipv.Distance, ipv.Capacity).Sort(servers)
+		}
+
 
 		results, _ := strconv.Atoi(cmd.Flags().Lookup("results").Value.String())
 		for _, server := range servers[:results] {
@@ -72,8 +75,6 @@ var listCmd = &cobra.Command{
 				tm.Color(strconv.FormatFloat(server.Distance, 'f', 0, 64), tm.RED),
 			)
 		}
-		fmt.Println("Args: ", cmd.Flags().Lookup("sort").Value)
-//		cmd.DebugFlags()
 	},
 }
 
