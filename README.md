@@ -10,6 +10,7 @@ https://www.ipvanish.com/api/servers.geojson
 ## Freegeoip json
 ```curl http://freegeoip.net/json/|gojson -name GeoIP -o ipvanish/geoip.go -pkg ipv```
 
+[![Analytics](https://ga-beacon.appspot.com/UA-68563453-1/ipvanish/readme)](https://github.com/igrigorik/ga-beacon)
 
 # License
 
