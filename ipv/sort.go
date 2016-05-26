@@ -1,13 +1,14 @@
 package ipv
 import (
 	"sort"
+	//"time"
 )
 
 var Distance = func(c1, c2 *IPVServer) bool {
 return c1.Distance < c2.Distance
 }
 var Latency = func(c1, c2 *IPVServer) bool {
-return c1.Latency < c2.Latency
+return (c1.Latency != 0 && c1.Latency < c2.Latency) || c2.Latency == 0 //&& c1.Latency != time.Duration(0)  //&& c2.Latency != 0
 }
 var Capacity = func(c1, c2 *IPVServer) bool {
 return c1.Properties.Capacity < c2.Properties.Capacity

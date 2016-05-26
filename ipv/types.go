@@ -1,5 +1,7 @@
 package ipv
 
+import "time"
+
 type IPVServer struct {
 	Geometry struct {
 		Coordinates []float64 `json:"coordinates"`
@@ -14,8 +16,8 @@ type IPVServer struct {
 		CountryCode          string `json:"countryCode"`
 		Hostname             string `json:"hostname"`
 		IP                   string `json:"ip"`
-		Latitude             string `json:"latitude"`
-		Longitude            string `json:"longitude"`
+		Latitude             float64 `json:"latitude,string"`
+		Longitude            float64 `json:"longitude,string"`
 		Marker_cluster_small string `json:"marker-cluster-small"`
 		Marker_color         string `json:"marker-color"`
 		Online               bool   `json:"online"`
@@ -27,5 +29,5 @@ type IPVServer struct {
 	} `json:"properties"`
 	Type string `json:"type"`
 	Distance float64
-	Latency float64
+	Latency time.Duration
 }

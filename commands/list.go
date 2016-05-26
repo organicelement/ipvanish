@@ -17,7 +17,6 @@
 package commands
 
 import (
-	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/organicelement/ipvanish/ipv"
@@ -42,14 +41,8 @@ var listCmd = &cobra.Command{
 		p := geo.NewPoint(geoip.Latitude, geoip.Longitude)
 
 		for i, server := range servers {
-			lat, err := strconv.ParseFloat(server.Properties.Latitude, 64)
-			if err != nil {
-				log.Warnf("Error parsing latitude : %s", err)
-			}
-			long, err := strconv.ParseFloat(server.Properties.Longitude, 64)
-			if err != nil {
-				log.Warnf("Error parsing longitude : %s", err)
-			}
+			lat := server.Properties.Latitude
+			long := server.Properties.Longitude
 			p2 := geo.NewPoint(lat, long)
 			dist := p.GreatCircleDistance(p2)
 

@@ -2,14 +2,18 @@ package commands
 
 import (
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
+	log "github.com/Sirupsen/logrus"
+
+	"os"
 )
 
 const SORTFLAG = "sort"
 const CAPACITY = "capacity"
 const LATENCY = "latency"
 const DISTANCE = "distance"
+const RESULTS = "results"
+const DEBUG = "debug"
 
 var IpvanishCmd = &cobra.Command{
 	Use:   "ipvanish",
@@ -30,6 +34,7 @@ Complete documentation is available at http://ipvanish.com/.`,
 var ipvanishCmdV *cobra.Command
 
 //Flags that are to be added to commands.
+var Debug bool
 var Sort string
 var Results uint
 
@@ -50,7 +55,8 @@ func AddCommands() {
 func init() {
 	// Persistent == available to sub commands
 	IpvanishCmd.PersistentFlags().StringVarP(&Sort, SORTFLAG, "s", "capacity", "sort order for hosts (default is distance")
-	IpvanishCmd.PersistentFlags().UintVarP(&Results, "results", "n", 20, "Total number of results to display and filter")
+	IpvanishCmd.PersistentFlags().UintVarP(&Results, RESULTS, "n", 20, "Total number of results to display and filter")
+	IpvanishCmd.PersistentFlags().BoolVarP(&Debug, DEBUG, "d", false, "Total number of results to display and filter")
 
 	ipvanishCmdV = IpvanishCmd
 
@@ -64,6 +70,9 @@ func init() {
   IPVanish is a command line tool
 
   You need to open cmd.exe and run it from there.`
+
+	//log.SetFormatter(&prefixed.TextFormatter{DisableSorting: true})
+	log.SetOutput(os.Stdout)
 }
 
 func LoadDefaultSettings() {
@@ -82,11 +91,15 @@ func InitializeConfig() {
 		viper.Set("sort", Sort)
 	}
 
-	jww.INFO.Println("Using config file:", viper.ConfigFileUsed())
+	//log.Debugf("Using config file: %s", viper.ConfigFileUsed())
 
 }
 
 func begin(cmd *cobra.Command, args []string) {
+	if Debug {
+		log.Infoln("Changing to debug logging")
+		log.SetLevel(log.DebugLevel)
+	}
 }
 
 func finish(cmd *cobra.Command, args []string) {
