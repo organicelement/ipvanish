@@ -1,0 +1,32 @@
+module github.com/organicelement/ipvanish
+
+require (
+	github.com/Sirupsen/logrus v0.11.5
+	github.com/briandowns/spinner v0.0.0-20170614154858-48dbb65d7bd5
+	github.com/buger/goterm v0.0.0-20180423150900-6d19e6a8df12
+	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5
+	github.com/fatih/color v1.7.0
+	github.com/fsnotify/fsnotify v1.4.7
+	github.com/hashicorp/hcl v0.0.0-20180404174102-ef8a98b0bbce
+	github.com/inconshreveable/mousetrap v1.0.0
+	github.com/kellydunn/golang-geo v0.7.0
+	github.com/kylelemons/go-gypsy v0.0.0-20160905020020-08cad365cd28
+	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
+	github.com/magiconair/properties v1.8.0
+	github.com/mattn/go-colorable v0.0.9
+	github.com/mattn/go-isatty v0.0.3
+	github.com/mitchellh/mapstructure v0.0.0-20180511142126-bb74f1db0675
+	github.com/pelletier/go-toml v1.2.0
+	github.com/spf13/afero v1.1.1
+	github.com/spf13/cast v1.2.0
+	github.com/spf13/cobra v0.0.3
+	github.com/spf13/jwalterweatherman v0.0.0-20180109140146-7c0cea34c8ec
+	github.com/spf13/pflag v1.0.1
+	github.com/spf13/viper v1.0.2
+	github.com/tatsushid/go-fastping v0.0.0-20160109021039-d7bb493dee3e
+	github.com/ziutek/mymysql v1.5.4
+	golang.org/x/net v0.0.0-20180621144259-afe8f62b1d6b
+	golang.org/x/sys v0.0.0-20180620133508-ad87a3a340fa
+	golang.org/x/text v0.3.0
+	gopkg.in/yaml.v2 v2.2.1
+)

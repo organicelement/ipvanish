@@ -17,13 +17,14 @@
 package commands
 
 import (
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/organicelement/ipvanish/ipv"
+	"fmt"
+	"github.com/Sirupsen/logrus"
 	tm "github.com/buger/goterm"
 	"github.com/kellydunn/golang-geo"
+	"github.com/organicelement/ipvanish/ipv"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"strconv"
-	"fmt"
 )
 
 var listCmd = &cobra.Command{
@@ -36,7 +37,11 @@ var listCmd = &cobra.Command{
 		viper.Set("BuildDrafts", true)
 
 		servers := ipv.GetServers()
-		geoip, _ := ipv.GetLocation()
+		geoip, err := ipv.GetLocation()
+
+		if err != nil {
+			logrus.Errorf("Could not determine this position: %s", err.Error())
+		}
 
 		p := geo.NewPoint(geoip.Latitude, geoip.Longitude)
 
@@ -50,7 +55,7 @@ var listCmd = &cobra.Command{
 			servers[i].Distance = dist * 0.621371
 		}
 
-		switch (viper.GetString(SORTFLAG)) {
+		switch viper.GetString(SORTFLAG) {
 		case DISTANCE:
 			ipv.OrderedBy(ipv.Distance).Sort(servers)
 		case LATENCY:
@@ -59,12 +64,11 @@ var listCmd = &cobra.Command{
 			ipv.OrderedBy(ipv.Distance, ipv.Capacity).Sort(servers)
 		}
 
-
 		results, _ := strconv.Atoi(cmd.Flags().Lookup("results").Value.String())
 		for _, server := range servers[:results] {
 			fmt.Printf("Host %v has %v utilization and is %v miles away\n",
 				tm.Color(server.Properties.Hostname, tm.CYAN),
-				tm.Color(strconv.Itoa(server.Properties.Capacity) + "%", capacityColor(server.Properties.Capacity)),
+				tm.Color(strconv.Itoa(server.Properties.Capacity)+"%", capacityColor(server.Properties.Capacity)),
 				tm.Color(strconv.FormatFloat(server.Distance, 'f', 0, 64), tm.RED),
 			)
 		}
@@ -72,9 +76,9 @@ var listCmd = &cobra.Command{
 }
 
 func capacityColor(capacity int) int {
-	if capacity >=75 {
+	if capacity >= 75 {
 		return tm.RED
-	} else if capacity >=25 && capacity < 75 {
+	} else if capacity >= 25 && capacity < 75 {
 		return tm.YELLOW
 	} else if capacity < 25 {
 		return tm.GREEN

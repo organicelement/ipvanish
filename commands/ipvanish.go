@@ -1,10 +1,11 @@
 package commands
 
 import (
+	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	log "github.com/Sirupsen/logrus"
 
+	"fmt"
 	"os"
 )
 
@@ -15,10 +16,12 @@ const DISTANCE = "distance"
 const RESULTS = "results"
 const DEBUG = "debug"
 
+var VERSION string
+
 var IpvanishCmd = &cobra.Command{
 	Use:   "ipvanish",
 	Short: "IPVanish command line utilities",
-	Long: `ipvanish is the main command.
+	Long: `ipvanish is the main command
 
 IPVanish is a VPN provider, this command lists the servers and
 sorts/displays by utilization or distance.
@@ -27,7 +30,7 @@ Complete documentation is available at http://ipvanish.com/.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		InitializeConfig()
 	},
-	PersistentPreRun: begin,
+	PersistentPreRun:  begin,
 	PersistentPostRun: finish,
 }
 
@@ -42,11 +45,21 @@ var Results uint
 func Execute() {
 	AddCommands()
 	IpvanishCmd.Execute()
-//	utils.StopOnErr(IpvanishCmd.Execute())
+	//	utils.StopOnErr(IpvanishCmd.Execute())
+}
+
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Print the version number",
+	Long:  `Shows the version number if a final release, or a date for snapshots`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("The version is: ", VERSION)
+	},
 }
 
 //AddCommands adds child commands to the root command.
 func AddCommands() {
+	IpvanishCmd.AddCommand(versionCmd)
 	IpvanishCmd.AddCommand(listCmd)
 	IpvanishCmd.AddCommand(pingCmd)
 }
@@ -74,7 +87,7 @@ func LoadDefaultSettings() {
 
 // InitializeConfig initializes a config file with sensible default configuration flags.
 func InitializeConfig() {
-//	viper.SetConfigFile(CfgFile)
+	//	viper.SetConfigFile(CfgFile)
 
 	viper.RegisterAlias("indexes", "taxonomies")
 

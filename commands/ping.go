@@ -3,20 +3,20 @@ package commands
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-//	"io/ioutil"
+	//	"io/ioutil"
+	"fmt"
+	log "github.com/Sirupsen/logrus"
+	"github.com/briandowns/spinner"
+	tm "github.com/buger/goterm"
+	"github.com/kellydunn/golang-geo"
+	"github.com/organicelement/ipvanish/ipv"
 	"github.com/tatsushid/go-fastping"
 	"net"
-	"fmt"
 	"os"
-	"time"
 	"os/signal"
-	"syscall"
-	log "github.com/Sirupsen/logrus"
-	"github.com/organicelement/ipvanish/ipv"
-	"github.com/kellydunn/golang-geo"
 	"strconv"
-	tm "github.com/buger/goterm"
-	"github.com/briandowns/spinner"
+	"syscall"
+	"time"
 )
 
 //func init() {
@@ -36,7 +36,8 @@ var pingCmd = &cobra.Command{
 	Long:  `List all of the drafts in your content directory.`,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		spin.Prefix = "Scanning: "
-		spin.FinalMSG = "Finished..."
+		//spin.Suffix = ""
+		//spin.FinalMSG = "Finished..."
 		spin.Color("green")
 		spin.Start()
 	},
@@ -49,6 +50,13 @@ var pingCmd = &cobra.Command{
 		viper.Set("BuildDrafts", true)
 
 		servers := ipv.GetServers()
+		if len(servers) <= 0 {
+			fmt.Printf("IPVanish returned %v servers.\n",
+				tm.Color(strconv.Itoa(len(servers)), tm.RED),
+			)
+			return
+		}
+
 		geoip, _ := ipv.GetLocation()
 
 		p := geo.NewPoint(geoip.Latitude, geoip.Longitude)
@@ -80,7 +88,7 @@ var pingCmd = &cobra.Command{
 				fmt.Println(err)
 				os.Exit(1)
 			}
-			results[ra.String()] = srv      // maybe &servers[i]?
+			results[ra.String()] = srv // maybe &servers[i]?
 			ping.AddIPAddr(ra)
 
 		}
@@ -104,7 +112,7 @@ var pingCmd = &cobra.Command{
 
 		//log.Infof("Geo Results: %v", results)
 		//iter := 0
-		loop:
+	loop:
 		for {
 			select {
 			case <-c:
@@ -113,7 +121,7 @@ var pingCmd = &cobra.Command{
 			case res := <-onRecv:
 				//iter++
 				//log.Debugln(iter)
-			    if res.rtt > 0 {
+				if res.rtt > 0 {
 					server := results[res.addr.String()]
 					if server != nil {
 						server.Latency = res.rtt
@@ -146,7 +154,7 @@ var pingCmd = &cobra.Command{
 		ping.Stop()
 
 		srvrs := make([]ipv.IPVServer, len(results))
-		log.Infof("%v results", len(results))
+		//log.Infof("%v results", len(results))
 		i := 0
 		for _, v := range results {
 			//log.Infof("This server is %v", *v)
@@ -159,7 +167,7 @@ var pingCmd = &cobra.Command{
 			i++
 		}
 
-		switch (viper.GetString(SORTFLAG)) {
+		switch viper.GetString(SORTFLAG) {
 		case DISTANCE:
 			ipv.OrderedBy(ipv.Distance).Sort(servers)
 		case LATENCY:
@@ -168,18 +176,17 @@ var pingCmd = &cobra.Command{
 			ipv.OrderedBy(ipv.Distance, ipv.Capacity).Sort(servers)
 		}
 
-
 		numresults, _ := strconv.Atoi(cmd.Flags().Lookup("results").Value.String())
+		fmt.Print("\n")
 		for _, server := range servers[:numresults] {
 			fmt.Printf("Host %v has %v utilization, is %v miles away, with %vms latency\n",
-                // TODO: Use https://github.com/gosuri/uitable
+				// TODO: Use https://github.com/gosuri/uitable
 				tm.Color(server.Properties.Hostname, tm.CYAN),
-				tm.Color(strconv.Itoa(server.Properties.Capacity) + "%", capacityColor(server.Properties.Capacity)),
+				tm.Color(strconv.Itoa(server.Properties.Capacity)+"%", capacityColor(server.Properties.Capacity)),
 				tm.Color(strconv.FormatFloat(server.Distance, 'f', 0, 64), tm.RED),
 				tm.Color(strconv.FormatInt(int64(time.Duration(server.Latency)/time.Millisecond), 10), tm.GREEN),
 			)
 		}
-
 
 	},
 }
